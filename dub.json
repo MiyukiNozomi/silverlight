@@ -1,0 +1,9 @@
+{
+	"authors": [
+		"Peter Parker"
+	],
+	"copyright": "Copyright © 2021, Peter Parker",
+	"description": "A minimal D application.",
+	"license": "proprietary",
+	"name": "silverlight"
+}
