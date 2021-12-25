@@ -1,0 +1,11 @@
+module silver,light,list;
+
+template(T) {
+	public class List(T) {
+		public:
+			
+			this() {
+			
+			}
+	}
+]
