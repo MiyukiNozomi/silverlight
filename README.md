@@ -2,6 +2,7 @@
 silverlight
 
 just ignore this repository for now, its here for testing purposes,
+actually, this repository is basically me trying to do something in an outdated android distro
 
 # to do list
 1) make a parser
