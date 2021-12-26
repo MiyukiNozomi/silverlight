@@ -6,6 +6,9 @@ import std.algorithm;
 import std.math.traits;
 
 import silver.light.list;
+import silver.light.message;
+import silver.light.ast : Node, NodeType;
+import silver.light.helpers : getLocation;
 
 /**token's type enumerator*/
 public enum TokenType {
@@ -73,13 +76,28 @@ public struct Transformation {
 }
 
 /** Token */
-public struct Token {
+public class Token : Node {
     /**string representation of the token*/
-    string str;
+    public string str;
     /**type of the token*/
-    TokenType type;
+    public TokenType type;
     /**Token's Transformation*/
-    Transformation loc;
+    public Transformation loc;
+
+    /***/
+    public this(string str, TokenType type, Transformation loc) {
+        this.str = str;
+        this.type = type;
+        this.loc = loc;
+    }
+
+    public override NodeType getType() {
+        return NodeType.Token;
+    }
+
+    public override List!Node getChildren() {
+        return List!Node.empty();
+    }
 }
 
 /**
@@ -93,11 +111,14 @@ public class Lexer {
     public string input;
     /**current char*/
     public char current;
+    /**filename*/
+    public string filename;
     /**last token*/
     public Token last;
 
-    /**constructor, just here to grab the input.*/
-    public this(string input) {
+    /**constructor, just here to grab the input. and filename*/
+    public this(string filename, string input) {
+        this.filename = filename;
         this.input = input;
         this.index = 0;
         this.current = next();
@@ -112,7 +133,7 @@ public class Lexer {
         column = 0;
         getLocation(input, index, cast(int) str.length, line, column);
         Transformation transformation = Transformation(line, column, cast(int) str.length, index);
-        return (last = Token(str,type, transformation));
+        return (last = new Token(str,type, transformation));
     }
 
     private char next() {
@@ -376,6 +397,14 @@ public class Lexer {
         }
  
         current = next();
-        return makeToken("not-supported-token", TokenType.Invalid);
+        int line;
+        int column;
+        line = 0;
+        column = 0;
+        getLocation(input, index, 1, line, column);
+        Transformation transformation = Transformation(line, column, 1, index);
+        _MessageManager.addError(Code.InvalidToken, "Invalid token found! \"" ~ current ~ "\"",
+                                 filename, transformation);
+        return new Token("not-supported-token", TokenType.Invalid, transformation);
     }      
 }

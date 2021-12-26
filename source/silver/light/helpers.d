@@ -18,13 +18,16 @@ string subString(string s, size_t beg, size_t end) {
 
 /**well, returns the line and column of a index in a string, yeah.
 it kinda sucks but it works.*/
-void getLocation(string text,int textIndex,out int line,out int col) {
+void getLocation(string text,int textIndex, int wordLength,out int line,out int col) {
     line = 1;
-    col = 0;
+    col = -wordLength;
+
     for (int i = 0; i <= textIndex; i++) {
+        if (i >= text.length)
+            break;
         if (text[i] == '\n') {
             ++line;
-            col = 1;
+            col = -wordLength;
         } else {
             ++col;
         }

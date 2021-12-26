@@ -4,25 +4,9 @@ module silver.light.list;
 
 import std.algorithm.mutation;
 
-/** base to make a list*/
+/**a list*/
 template List(T) {
-    interface List {
-        public:
-            void add(T object);
-
-            T get(int index);
-
-            bool contains(int index);
-            
-            void remove(int index);
-            
-            ulong size();
-    }
-}
-
-/**(simple) implementation of this thing*/
-template ArrayList(T) {
-    class ArrayList : List!T {
+    class List {
         private:
             T[] buffer;
 
@@ -47,6 +31,24 @@ template ArrayList(T) {
 
             ulong size() {
                 return buffer.length;
+            }
+
+            void clear() {
+                buffer = null;
+            }
+
+            static List!T empty() {
+                return new List!T(); 
+            }
+
+            static List!T yield(T[] elms) {
+                List!T theList = new List!T();
+
+                foreach (elm ; elms) {
+                    theList.add(elm);
+                }
+
+                return theList;
             }
     }
 }
