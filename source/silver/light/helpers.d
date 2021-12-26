@@ -24,7 +24,7 @@ void getLocation(string text,int textIndex,out int line,out int col) {
     for (int i = 0; i <= textIndex; i++) {
         if (text[i] == '\n') {
             ++line;
-            col = 0;
+            col = 1;
         } else {
             ++col;
         }

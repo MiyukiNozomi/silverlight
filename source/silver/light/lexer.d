@@ -78,7 +78,7 @@ public struct Token {
     string str;
     /**type of the token*/
     TokenType type;
-    /*Transformation*/
+    /**Token's Transformation*/
     Transformation loc;
 }
 
@@ -104,7 +104,12 @@ public class Lexer {
     }
 
     private Token makeToken(string str, TokenType type) {
-        int line = 0, column = 0;
+        int line, column;
+        //dscanner keeps asking me to turn these variables into immutable or a const integer,
+        //and of course, if i do that i will just break the entirety of getLocation.
+        //so, please ignore these 2 additional lines.
+        line = 0;
+        column = 0;
         getLocation(input, index, cast(int) str.length, line, column);
         Transformation transformation = Transformation(line, column, cast(int) str.length, index);
         return (last = Token(str,type, transformation));
