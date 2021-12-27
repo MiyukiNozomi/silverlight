@@ -6,6 +6,7 @@ import std.traits : OriginalType;
 import silver.light.ast;
 import silver.light.list;
 import silver.light.lexer;
+import silver.light.lexutil;
 import silver.light.message;
 
 /***/
@@ -48,38 +49,25 @@ public class Parser {
 
     /** parsers the file specified in the constructor. */
     public ASyntaxTree parse() {
-        ExpressionNode node = parseTerm();
+        ExpressionNode node = parseExpression();
         Token endOfFIle = match(TokenType.EndOfFile);
         return new ASyntaxTree(node, endOfFIle);
     }
 
-    private ExpressionNode parseExpression() {
-        return parseTerm();
-    }
+    private ExpressionNode parseExpression(int parentPrecedence = 0) {
+        ExpressionNode left = parsePrimary();
 
-    private ExpressionNode parseTerm() {
-        ExpressionNode left =  parseFactor();
+        while (true) {
+            int precedence = getOperatorPrecedence(_Current.type);
 
-        while (_Current.type == TokenType.Plus ||
-               _Current.type == TokenType.Minus) {
+            if (precedence == 0 || precedence <= parentPrecedence)
+                break;
+
             Token operator = nextToken();
-            ExpressionNode right = parseFactor();
+            ExpressionNode right = parseExpression(precedence);
             left = new BinaryNode(left, operator, right);
         }
-        
-        return left;
-    }
 
-    private ExpressionNode parseFactor() {
-        ExpressionNode left =  parsePrimary();
-
-        while (_Current.type == TokenType.Multiply ||
-               _Current.type == TokenType.Divide) {
-            Token operator = nextToken();
-            ExpressionNode right = parsePrimary();
-            left = new BinaryNode(left, operator, right);
-        }
-        
         return left;
     }
 

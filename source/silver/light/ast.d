@@ -7,7 +7,7 @@ import silver.light.lexer;
 public enum NodeType {
     Node,
     Token,
-    Number,
+    Literal,
     BinaryExpression,
     ParenthesisExpression,
 }
@@ -28,7 +28,7 @@ public class LiteralNode : ExpressionNode {
     }
 
     public override NodeType getType() {
-        return NodeType.Number;
+        return NodeType.Literal;
     }
 
     public override List!Node getChildren() {
