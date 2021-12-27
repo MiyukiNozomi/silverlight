@@ -3,11 +3,11 @@ module silver.light.parser;
 import std.conv : to;
 import std.traits : OriginalType;
 
-import silver.light.ast;
 import silver.light.list;
 import silver.light.lexer;
 import silver.light.lexutil;
 import silver.light.message;
+import silver.light.syntaxtree;
 
 /***/
 public class Parser {

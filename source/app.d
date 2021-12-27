@@ -1,10 +1,10 @@
 import std.stdio;
 import std.file: readText;
 
-import silver.light.ast;
 import silver.light.lexer;
 import silver.light.parser;
 import silver.light.message;
+import silver.light.syntaxtree;
 
 void main() {
 	initMessageManager();

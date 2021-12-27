@@ -7,8 +7,8 @@ import std.math.traits;
 
 import silver.light.list;
 import silver.light.message;
-import silver.light.ast : Node, NodeType;
 import silver.light.helpers : getLocation;
+import silver.light.syntaxtree : Node, NodeType;
 
 /**token's type enumerator*/
 public enum TokenType {

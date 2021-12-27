@@ -1,4 +1,4 @@
-module silver.light.ast;
+module silver.light.syntaxtree;
 
 import silver.light.list;
 import silver.light.lexer;
@@ -127,7 +127,7 @@ public class ASyntaxTree {
     }
 }
 
-/**a AST node*/
+/**a node*/
 public abstract class Node {
     /**returns the type of this node*/
     public abstract NodeType getType();
