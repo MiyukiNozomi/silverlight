@@ -17,14 +17,14 @@ public abstract class ExpressionNode : Node {
 }
 
 /** a node that holds a value*/
-public class NumberNode : ExpressionNode {
+public class LiteralNode : ExpressionNode {
 
     /***/
-    public Token numberToken;
+    public Token literalToken;
 
     /***/
-    public this(Token numberToken) {
-        this.numberToken = numberToken;
+    public this(Token literalToken) {
+        this.literalToken = literalToken;
     }
 
     public override NodeType getType() {
@@ -32,7 +32,7 @@ public class NumberNode : ExpressionNode {
     }
 
     public override List!Node getChildren() {
-        return List!Node.yield([numberToken]);
+        return List!Node.yield([literalToken]);
     }
 }
 

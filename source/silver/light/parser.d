@@ -91,7 +91,7 @@ public class Parser {
 
             return new ParenthesisExpression(left, expression, right);
         }
-        return new NumberNode(match(TokenType.IntegerLiteral));
+        return new LiteralNode(match(TokenType.IntegerLiteral));
     }
 
     private Token match(TokenType type) {
