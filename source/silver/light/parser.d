@@ -55,10 +55,20 @@ public class Parser {
     }
 
     private ExpressionNode parseExpression(int parentPrecedence = 0) {
-        ExpressionNode left = parsePrimary();
+        ExpressionNode left;
+
+        int unaryOperatorPrecedence = _Current.type.getUnaryOperatorPrecedence();
+
+        if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence) {
+            Token operatorToken = nextToken();
+            ExpressionNode operand = parseExpression(unaryOperatorPrecedence);
+            left = new UnaryNode(operatorToken, operand);
+        } else {
+            left = parsePrimary();
+        }
 
         while (true) {
-            int precedence = getOperatorPrecedence(_Current.type);
+            int precedence = getBinaryOperatorPrecedence(_Current.type);
 
             if (precedence == 0 || precedence <= parentPrecedence)
                 break;

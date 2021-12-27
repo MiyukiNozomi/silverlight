@@ -8,6 +8,7 @@ public enum NodeType {
     Node,
     Token,
     Literal,
+    UnaryExpression,
     BinaryExpression,
     ParenthesisExpression,
 }
@@ -85,6 +86,29 @@ public class BinaryNode : ExpressionNode {
 
     public override List!Node getChildren() {
         return List!Node.yield([left, operator, right]);
+    }
+}
+
+
+/**holds a unary expression */
+public class UnaryNode : ExpressionNode {
+    /***/
+    public Token operator;
+    /***/
+    public ExpressionNode operand;
+
+    /***/
+    public this(Token operator, ExpressionNode operand) {
+        this.operand = operand;
+        this.operator = operator;
+    }
+
+    public override NodeType getType() {
+        return NodeType.UnaryExpression;
+    }
+
+    public override List!Node getChildren() {
+        return List!Node.yield([operator, operand]);
     }
 }
 
